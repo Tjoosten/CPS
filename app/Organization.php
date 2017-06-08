@@ -17,4 +17,14 @@ class Organization extends Model
      * @var array
      */
     protected $fillable = ['avatar', 'organisation_description', 'organisation_name'];
+
+    /**
+     * Member relation for an organization.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function members()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

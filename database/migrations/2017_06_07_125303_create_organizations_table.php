@@ -15,9 +15,16 @@ class CreateOrganizationsTable extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->string('organisation_name');
             $table->text('organisation_description');
+            $table->timestamps();
+        });
+
+        Schema::create('organization_user', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('organization_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -29,6 +36,7 @@ class CreateOrganizationsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('organization_user');
         Schema::dropIfExists('organizations');
     }
 }

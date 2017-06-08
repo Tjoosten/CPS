@@ -11,7 +11,6 @@
 |
 */
 
-
 // Authenation routes.
 Auth::routes();
 Route::get('auth/{provider}', 'Auth\SocialAuthencation@redirectToProvider');

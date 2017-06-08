@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrganizationValidator;
 use App\Organization;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
@@ -40,6 +41,24 @@ class OrganizationController extends Controller
     }
 
     /**
+     * Display a specific organization and return 404 when no org. found.
+     *
+     * @param  integer $organizationId The organization id in the database.
+     * @return mixed
+     */
+    public function show($organizationId)
+    {
+        try {
+            $data['organization'] = $this->organzation->find($organizationId);
+            $data['title']        = $data['organization']->name;
+
+            return view('organizations.show', $data);
+        } catch(ModelNotFoundException $modelNotFoundException) {
+            return app()->abort(404);
+        }
+    }
+
+    /**
      * Store a new organization in the system
      *
      * @param  OrganizationValidator $input
@@ -47,11 +66,14 @@ class OrganizationController extends Controller
      */
     public function store(OrganizationValidator $input)
     {
-        if ($organization = $this->organzation->create($input->except(['_token']))) { // Create = OK
+        $organization = $this->organzation->create($input->except(['_token']));
+        $userAssign   = $this->organzation->find($organization->id)->members()->attach(auth()->user()->id);
+
+        if ($organization && $userAssign) { // Create AND Assign = OK
             if ($input->file('avatar')) { // There is an avatar given
                 // TODO: write method to shrink the image tp 75x75
+                $path   = $input->file('avatar')->store('avatars');
 
-                $path = $input->file('avatar')->store('avatars');
                 $this->organzation->find($organization->id)
                     ->update(['avatar' => $path]); // Save avatar to the database.
             }
