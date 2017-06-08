@@ -6,6 +6,7 @@ use App\Http\Requests\OrganizationValidator;
 use App\Organization;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 /**
  * Class OrganizationController
@@ -66,16 +67,17 @@ class OrganizationController extends Controller
      */
     public function store(OrganizationValidator $input)
     {
-        $organization = $this->organzation->create($input->except(['_token']));
-        $userAssign   = $this->organzation->find($organization->id)->members()->attach(auth()->user()->id);
+        if ($organization = $this->organzation->create($input->except(['_token']))) { // Create AND Assign = OK
+            $this->organzation->find($organization->id)->members()->attach(auth()->user()->id);
 
-        if ($organization && $userAssign) { // Create AND Assign = OK
             if ($input->file('avatar')) { // There is an avatar given
-                // TODO: write method to shrink the image tp 75x75
-                $path   = $input->file('avatar')->store('avatars');
+                $image  = $input->file('avatar');
+                $avatar = time() . '.' . $image->getClientOriginalExtension();
+                $path   = public_path('avatars/organization/' . $avatar);
 
-                $this->organzation->find($organization->id)
-                    ->update(['avatar' => $path]); // Save avatar to the database.
+                Image::make($image->getRealPath())->resize(75, 75)->save($path);
+
+                $this->organzation->find($organization->id)->update(['avatar' => $avatar]); // Save avatar to the database.
             }
 
             session()->flash('class', 'alert alert-success');

@@ -13,12 +13,14 @@
             <div class="col-md-12"> {{-- Main content frame --}}
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <h3 style="margin-bottom: -10px;">Organizations</h3>
-                        <hr>
+                        @if ((int) count($user->organizations) > 0)
+                            <h3 style="margin-bottom: -10px;">Organizations</h3>
+                            <hr>
 
-                        <img src="{{ asset('img/default.png') }}" class="img-rounded" style="height: 50px; width: 50px;">
-                        <img src="{{ asset('img/default.png') }}" class="img-rounded" style="height: 50px; width: 50px;">
-                        <img src="{{ asset('img/default.png') }}" class="img-rounded" style="height: 50px; width: 50px;">
+                            @foreach ($user->organizations as $organization)
+                                <img src="{{ asset('avatars/organization/'. $organization->avatar) }}" class="img-rounded" style="height: 50px; width: 50px;">
+                            @endforeach
+                        @endif
 
                         <h3 style="margin-bottom: -10px;">Started petitions</h3>
                         <hr>

@@ -39,7 +39,7 @@ class ProfileController extends Controller
     public function members($userId)
     {
         try {
-            $data['user']  = $this->user->findOrFail($userId);
+            $data['user']  = $this->user->with(['organizations'])->findOrFail($userId);
             $data['title'] = $data['user']->name;
 
             return view('account.profile-members', $data);
