@@ -16,6 +16,8 @@ use Intervention\Image\Facades\Image;
 class OrganizationController extends Controller
 {
     /**
+     * The organization model.
+     *
      * @var Organization
      */
     private $organzation;

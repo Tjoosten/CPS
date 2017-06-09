@@ -18,7 +18,9 @@
                             <hr>
 
                             @foreach ($user->organizations as $organization)
-                                <img src="{{ asset('avatars/organization/'. $organization->avatar) }}" class="img-rounded" style="height: 50px; width: 50px;">
+                                <a href="" title="{{ $organization->organisation_name }}">
+                                    <img src="{{ asset('avatars/organization/'. $organization->avatar) }}" class="img-rounded" style="height: 50px; width: 50px;">
+                                </a>
                             @endforeach
                         @endif
 
