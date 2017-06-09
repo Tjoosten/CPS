@@ -29,7 +29,9 @@
 
             <div class="col-md-9"> {{-- Page content --}}
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="information">Info</div>
+                    <div role="tabpanel" class="tab-pane fade in active" id="information">
+                        @include('settings.info')
+                    </div>
                     <div role="tabpanel" class="tab-pane fade" id="security">
                         @include('settings.security')
                     </div>

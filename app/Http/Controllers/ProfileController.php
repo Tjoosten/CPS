@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Country;
 use App\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -21,13 +22,22 @@ class ProfileController extends Controller
     private $user;
 
     /**
+     * The country model for the database.
+     *
+     * @var Country
+     */
+    private $countries;
+
+    /**
      * ProfileController constructor.
      *
      * @param User $user
+     * @param Country $countries
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Country $countries)
     {
-        $this->user = $user;
+        $this->user      = $user;
+        $this->countries = $countries;
     }
 
     /**
@@ -42,6 +52,7 @@ class ProfileController extends Controller
             ->firstOrFail();
 
         $data['title'] = $data['user']->username;
+        $data['countries'] = $this->countries->select(['id', 'long_name'])->get();
 
         return view('account.profile-user', $data);
     }
