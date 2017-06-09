@@ -7,6 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    // TODO: Set online indication for the user.
+    // TODO: Implement ban system.
+
     use Notifiable;
 
     /**

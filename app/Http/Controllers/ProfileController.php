@@ -31,6 +31,22 @@ class ProfileController extends Controller
     }
 
     /**
+     * Show the settings page for the authencated user.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function userSettings()
+    {
+        $data['user']  = $this->user->where('id', '=', auth()->user()->id)
+            ->with(['organizations'])
+            ->firstOrFail();
+
+        $data['title'] = $data['user']->username;
+
+        return view('account.profile-user', $data);
+    }
+
+    /**
      * Display a user profile to the other users.
      *
      * @param  integer $userId The user id in the database.

@@ -45,7 +45,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li><a href="{{ route('petitions.index') }}">Petities</a></li>
-                        <li><a href="">Ondersteuning</a></li>
+                        <li><a href="{{ route('helpdesk.index') }}">Helpdesk</a></li>
                         <li><a href="">Disclaimer</a></li>
                     </ul>
 
@@ -118,7 +118,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href=""><span class="fa fa-wrench" aria-hidden="true"></span> Settings</a></li>
+                                    <li><a href="{{ route('profile.settings') }}"><span class="fa fa-wrench" aria-hidden="true"></span> Settings</a></li>
 
                                     <li>
                                         <a href="{{ route('logout') }}"

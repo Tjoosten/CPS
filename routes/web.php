@@ -25,8 +25,20 @@ Route::get('/petitions/create', 'PetitionController@create')->name('petitions.cr
 Route::post('/petitions/store', 'PetitionController@store')->name('petitions.store');
 
 // Profile routes.
+Route::get('/settings', 'ProfileController@userSettings')->name('profile.settings');
 Route::get('/profile/member/{id}', 'ProfileController@members')->name('profile.member');
+
+// Settings routes
+Route::post('/settings/security', 'AccountController@updatePassword')->name('settings.security');
 
 // Organization routes
 Route::get('/organizations/create', 'OrganizationController@create')->name('organization.create');
 Route::post('/organizatons/store', 'OrganizationController@store')->name('organization.store');
+
+// Helpdesk routes.
+Route::get('/helpdesk', 'SupportController@index')->name('helpdesk.index');
+
+// Question routes
+Route::get('/questions', 'QuestionsController@index')->name('questions.index');
+Route::get('/questions/create', 'QuestionsController@create')->name('questions.create');
+Route::post('/questions.store', 'QuestionsController@store')->name('questions.store');
