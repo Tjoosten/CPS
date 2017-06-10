@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Categories;
+use App\Country;
 use App\Http\Requests\PetitionValidator;
 use App\Petitions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -31,20 +32,26 @@ class PetitionController extends Controller
      * @var Categories
      */
     private $categories;
+    /**
+     * @var Country
+     */
+    private $country;
 
     /**
      * PetitionController constructor.
      *
-     * @param Petitions  $petition      The petitions  database model.
-     * @param Categories $categories    The categories database model.
+     * @param Petitions   $petition     The petitions  database model.
+     * @param Categories  $categories   The categories database model.
+     * @param Country     $country      The country database instance.
      */
-    public function __construct(Petitions $petition, Categories $categories)
+    public function __construct(Petitions $petition, Categories $categories, Country $country)
     {
         $authRoutes = ['create', 'store'];
         $this->middleware('auth')->only($authRoutes);
 
         $this->petition   = $petition;
         $this->categories = $categories;
+        $this->country    = $country;
     }
 
     /**
@@ -74,8 +81,9 @@ class PetitionController extends Controller
     public function show($petitionId)
     {
         try {
-            $data['petition'] = $this->petition->with(['author'])->findOrFail($petitionId);
-            $data['title']    = $data['petition']->title;
+            $data['petition']  = $this->petition->with(['author'])->findOrFail($petitionId);
+            $data['countries'] = $this->country->all();
+            $data['title']     = $data['petition']->title;
 
             return view('petitions.show', $data);
         } catch (ModelNotFoundException $modelNotFoundException) {
@@ -137,6 +145,20 @@ class PetitionController extends Controller
      */
     public function destroy($petitionId)
     {
-        return back(302);
+        try { // Try to find the petition in the database.
+            $petition = $this->petition->findOrFail($petitionId);
+
+            if ($petition->author_id === auth()->user()->id && $petition->delete()) { // The author is the current logged in user.
+                $petition->categories()->sync([]);
+
+                // Flash output
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', 'The petition has been deleted.');
+            }
+
+            return redirect()->route('petitions.index');
+        } catch(ModelNotFoundException $modelNotFoundException) {
+            return app()->abort(404);
+        }
     }
 }
