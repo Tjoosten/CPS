@@ -28,5 +28,14 @@
                 </div>
             </div>
         </div> {{-- /Organization setting Content --}}
+    @else
+        <div class="col-md-12">
+            <div class="blankslate">
+                <span class="mega-octicon octicon-organization blankslate-icon"></span>
+
+                <h3>Organizations</h3>
+                <p>There are no organizations found. Where you are part of.</p>
+            </div>
+        </div>
     @endif
 </div>

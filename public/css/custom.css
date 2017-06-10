@@ -197,3 +197,6 @@
 .btn-yahoo:active,.btn-yahoo.active,.open>.dropdown-toggle.btn-yahoo{background-image:none}
 .btn-yahoo.disabled:hover,.btn-yahoo[disabled]:hover,fieldset[disabled] .btn-yahoo:hover,.btn-yahoo.disabled:focus,.btn-yahoo[disabled]:focus,fieldset[disabled] .btn-yahoo:focus,.btn-yahoo.disabled.focus,.btn-yahoo[disabled].focus,fieldset[disabled] .btn-yahoo.focus{background-color:#720e9e;border-color:rgba(0,0,0,0.2)}
 .btn-yahoo .badge{color:#720e9e;background-color:#fff}
+
+/** Primer css blankslate */
+.blankslate{position:relative;padding:32px;text-align:center;background-color:#fafbfc;border:1px solid #e1e4e8;border-radius:3px;box-shadow:inset 0 0 10px rgba(27,31,35,0.05)}.blankslate code{padding:2px 5px 3px;font-size:14px;background:#fff;border:1px solid #eaecef;border-radius:3px}.blanksl
