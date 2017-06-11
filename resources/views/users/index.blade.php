@@ -61,8 +61,8 @@
                 @endif
 
                 <div class="list-group"> {{-- Option menu --}}
-                    <a href="" class="list-group-item"> {{-- TODO: Implement count query. --}}
-                        All users <span class="pull-right badge">0</span>
+                    <a href="" class="list-group-item">
+                        All users <span class="pull-right badge">{{ $usersCount }}</span>
                     </a>
                     <a href="" class="list-group-item"> {{-- TODO: Implement count query. --}}
                         Blocked users <span class="pull-right badge">0</span>
