@@ -38,6 +38,53 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="list-group">
+
+                        <div class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="{{ route('users.index') }}">
+                                        <img class="media-object img-thumbnail img-rounded" style="width: 64px; height:64px;" src="{{ asset('img/control.svg') }}" alt="FAQ">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">User management</h4>
+                                    In this helpdesk section you can mange the platform users.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="">
+                                        <img class="media-object img-thumbnail img-rounded" style="width: 64px; height:64px;" src="{{ asset('img/control.svg') }}" alt="FAQ">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Helpdesk management</h4>
+                                    The system for managing the helpdesk tickets from platform users.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="">
+                                        <img class="media-object img-thumbnail img-rounded" style="width: 64px; height:64px;" src="{{ asset('img/control.svg') }}" alt="FAQ">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Report management</h4>
+                                    The system for managing the reports from platform users.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

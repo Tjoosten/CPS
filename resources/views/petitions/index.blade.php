@@ -39,7 +39,7 @@
                                                         </div>
 
                                                         <div class="col-md-9">
-                                                            <p></p>
+                                                            <p>{{ $item3->description }}</p>
                                                             <p>
                                                                 <a class="btn btn-sm btn-info" href="{{ route('petitions.show', $item3) }}">
                                                                     Lees meer...
@@ -49,9 +49,7 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-md-12" style="margin-top: -20px;">
-                                                            <p>{{-- TODO: Implement the description --}}</p>
-
+                                                        <div class="col-md-12" style="margin-top: -15px;">
                                                             <p>
                                                                 <i class="fa fa-user" aria-hidden="true"></i> Creator: <a href="#">{{ $item3->author->name }}</a>
                                                                 | <i class="fa fa-calendar" aria-hidden="true"></i> {{ $item3->created_at->format('d-m-Y') }}
@@ -84,6 +82,16 @@
             <div class="col-md-3"> {{-- Sidebar --}}
                 @if ((int) count($petitions) > 0) {{-- There are petitions found so display the categories and search box --}}
                     <div class="well well-sm"> {{-- Search-box --}}
+                        <form method="POST" action="">
+                            <div class="input-group">
+                                <input type="text" name="term" class="form-control" placeholder="Zoek bericht">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
                     </div> {{-- /Search-box --}}
 
                     <div class="panel panel-default"> {{-- Categories --}}

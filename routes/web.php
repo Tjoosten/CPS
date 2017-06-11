@@ -29,6 +29,9 @@ Route::get('/petitions/delete/{id}', 'PetitionController@destroy')->name('petiti
 Route::get('/settings', 'ProfileController@userSettings')->name('profile.settings');
 Route::get('/profile/member/{id}', 'ProfileController@members')->name('profile.member');
 
+// User management
+Route::get('/users', 'UsersController@index')->name('users.index');
+
 // Settings routes
 Route::post('/settings/security', 'AccountController@updatePassword')->name('settings.security');
 

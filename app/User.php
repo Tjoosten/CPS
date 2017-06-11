@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -25,6 +26,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * Online/offline status indicator.
+     *
+     * @return mixed
+     */
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id);
+    }
 
     /**
      * Get the organizations for the user.
