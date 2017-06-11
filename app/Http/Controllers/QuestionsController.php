@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
  */
 class QuestionsController extends Controller
 {
-    // TODO: Build up the Questionvalidator class.
+    // TODO: Build up the Question validator class. (create)
+    // TODO: Implement the question validator in the view. (create)
 
     /**
      * The categories db model instance.
@@ -67,6 +68,21 @@ class QuestionsController extends Controller
         $data['categories'] = $this->categories->where('module', '=', 'helpdesk-categories')->get();
 
         return view('questions.create', $data);
+    }
+
+    /**
+     * Get the questions for the authencated user.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function user()
+    {
+        $data['title']     = 'Questions' . auth()->user()->id;
+        $data['questions'] = $this->questions->where('author_id', auth()->user()->id)
+            ->with(['categories'])
+            ->paginate(30);
+
+        return view('questions.user', $data);
     }
 
     /**

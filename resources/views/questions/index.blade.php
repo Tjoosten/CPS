@@ -55,7 +55,7 @@
 
                     <div class="list-group">
                         <a href="{{ route('questions.create') }}" class="list-group-item"><span class="fa fa-btn fa-plus" aria-hidden="true"></span> Ask a new question.</a>
-                        <a href="" class="list-group-item"><span class="fa fa-btn fa-user" aria-hidden="true"></span> View your questions.</a>
+                        <a href="{{ route('questions.user') }}" class="list-group-item"><span class="fa fa-btn fa-user" aria-hidden="true"></span> View your questions.</a>
                         <a href="" class="list-group-item"><span class="fa fa-btn fa-globe" aria-hidden="true"></span> View the public questions.</a>
                     </div>
                 </div>
