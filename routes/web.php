@@ -46,4 +46,5 @@ Route::get('/helpdesk', 'SupportController@index')->name('helpdesk.index');
 Route::get('/questions', 'QuestionsController@index')->name('questions.index');
 Route::get('/questions/create', 'QuestionsController@create')->name('questions.create');
 Route::post('/questions.store', 'QuestionsController@store')->name('questions.store');
+Route::get('/question/show/{id}', 'QuestionsController@show')->name('questions.show');
 Route::get('/questions/user', 'QuestionsController@user')->name('questions.user');

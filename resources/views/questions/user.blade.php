@@ -53,7 +53,7 @@
                                                 <td>{{ $question->categories->name }}</td>
                                                 <td>{{ $question->title }}</td>
                                                 <td class="pull-right"> {{-- Options --}}
-                                                    <a href="" class="label label-info">Show</a>
+                                                    <a href="{{ route('questions.show', $question) }}" class="label label-info">Show</a>
 
                                                     @if ((string) $question->open === 'Y') {{-- The question open --}}
                                                         <a href="" class="label label-danger">Close</a>

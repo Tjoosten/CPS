@@ -18,6 +18,7 @@ class PetitionController extends Controller
 {
     // TODO: Build up the validator.
     // TODO: Implement the validation on the create view (form).
+    // TODO: Implement form field for the total signatures needed on the petition create.
 
     /**
      * The petitions model for the database.

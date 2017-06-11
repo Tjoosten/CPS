@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Categories;
 use App\Http\Requests\QuestionValidator;
 use App\Questions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 /**
@@ -83,6 +84,24 @@ class QuestionsController extends Controller
             ->paginate(30);
 
         return view('questions.user', $data);
+    }
+
+    /**
+     * Show a specific petition in the system.
+     *
+     * @param  integer $questionId The question in the database.
+     * @return mixed
+     */
+    public function show($questionId)
+    {
+        try {
+            $data['question'] = $this->questions->findOrFail($questionId);
+            $data['title']    = $data['question']->title;
+
+            return view('questions.show', $data);
+        } catch (ModelNotFoundException $exception) {
+            return app()->abort(404); // HTTP 404 => NOT FOUND.
+        }
     }
 
     /**
