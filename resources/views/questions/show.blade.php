@@ -6,10 +6,7 @@
             <div class="col-md-9"> {{-- Question content --}}
                 <div class="panel panel-default">
                     <div class="panel-heading">Question: {{ $question->title }}</div>
-
-                    <div class="panel-body">
-                        {{ $question->description }}
-                    </div>
+                    <div class="panel-body">{{ $question->description }}</div>
                 </div>
 
                 <hr>
@@ -47,7 +44,7 @@
                                     <div class="post-comments">
                                         <p class="meta">{{ auth()->user()->name }}:</p>
 
-                                        <form class="form-horizontal" method="POST" action="">
+                                        <form class="form-horizontal" method="POST" action=""> {{-- TODO: Implement store method for the comment. --}}
                                             {{ csrf_field() }} {{-- CSRF form protection --}}
 
                                             <div class="form-group">
