@@ -162,11 +162,13 @@ class QuestionsController extends Controller
     {
         $filter = ['_token', 'question_id'];
 
-        if ($reaction = $comment->create($input->except($filter)) && (int) $input->author_id === auth()->user()->id) {
-            $comment->find($reaction->id)->suppportQuestion()->attach($input->question_id);
+        if ((int) $input->author_id === auth()->user()->id) { // The authencated user is the same as the user in the form.
+            if ($reaction = $comment->create($input->except($filter))) { // Try to insert the comment in the database.
+                $comment->find($reaction->id)->suppportQuestion()->attach($input->question_id);
 
-            session()->flash('class', 'alert alert-success');
-            session()->flash('message', 'Your comment has been stored.');
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', 'Your comment has been stored.');
+            }
         }
 
         return back(302);
