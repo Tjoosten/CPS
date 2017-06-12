@@ -35,6 +35,6 @@ class Comments extends Model
      */
     public function suppportQuestion()
     {
-        return $this->belongsToMany(Questions::class, 'comments_relation')->withTimestamps();
+        return $this->belongsToMany(Questions::class)->withTimestamps();
     }
 }
