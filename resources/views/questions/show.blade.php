@@ -15,29 +15,28 @@
                     <div class="col-md-12">
                         <div class="blog-comment">
                             <ul class="comments">
-                                <li class="clearfix">
-                                    <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar img-responsive" alt="">
-                                    <div class="post-comments">
-                                        <p class="meta">
-                                            Dec 18, 2014 <a href="#">JohnDoe</a> says:
-                                            <span class="pull-right">
-                                                <a class="btn btn-xs btn-default">
-                                                    <span style="color: red;" class="fa fa-heart" aria-hidden="true"></span>
-                                                    <small>10</small>
-                                                </a>
-                                                <a class="btn btn-xs btn-danger" href="#" onclick="getDataById('{{ route('questions.json', $question) }}', 'report')">
-                                                    <small>
-                                                        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Report
-                                                    </small>
-                                                </a>
-                                            </span>
-                                        </p>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                            Etiam a sapien odio, sit amet
-                                        </p>
-                                    </div>
-                                </li>
+                                @foreach ($question->comments as $comment)
+                                    <li class="clearfix">
+                                        <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar img-responsive" alt="">
+                                        <div class="post-comments">
+                                            <p class="meta">
+                                                {{ $comment->created_at->format('d F Y') }} <a href="#">{{ $comment->author->name }}</a> says:
+                                                <span class="pull-right">
+                                                     {{-- <a class="btn btn-xs btn-default">
+                                                        <span style="color: red;" class="fa fa-heart" aria-hidden="true"></span>
+                                                        <small>10</small>
+                                                    </a> --}}
+                                                    <a class="btn btn-xs btn-danger" href="#" onclick="getDataById('{{ route('questions.json', $question) }}', 'report')">
+                                                        <small>
+                                                            <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Report
+                                                        </small>
+                                                    </a>
+                                                </span>
+                                            </p>
+                                            <p>{{ $comment->comment }}</p>
+                                        </div>
+                                    </li>
+                                @endforeach
 
                                 <li class="clearfix">
                                     <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar img-responsive" alt="">

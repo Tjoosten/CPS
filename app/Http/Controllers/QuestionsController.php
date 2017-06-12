@@ -109,7 +109,7 @@ class QuestionsController extends Controller
     public function show($questionId)
     {
         try {
-            $data['question']      = $this->questions->with(['comments'])->findOrFail($questionId);
+            $data['question']      = $this->questions->with(['comments.author'])->findOrFail($questionId);
             $data['reportReasons'] = $this->reasons->all();
             $data['title']         = $data['question']->title;
 
