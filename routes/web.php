@@ -35,6 +35,9 @@ Route::get('/users', 'UsersController@index')->name('users.index');
 // Settings routes
 Route::post('/settings/security', 'AccountController@updatePassword')->name('settings.security');
 
+// Comment routes
+Route::post('comment/question', 'QuestionsController@comment')->name('comments.question');
+
 // Organization routes
 Route::get('/organizations/create', 'OrganizationController@create')->name('organization.create');
 Route::post('/organizatons/store', 'OrganizationController@store')->name('organization.store');

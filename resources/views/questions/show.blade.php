@@ -44,7 +44,7 @@
                                     <div class="post-comments">
                                         <p class="meta">{{ auth()->user()->name }}:</p>
 
-                                        <form class="form-horizontal" method="POST" action="">
+                                        <form class="form-horizontal" method="POST" action="{{ route('comments.question') }}">
                                             {{ csrf_field() }} {{-- CSRF form protection --}}
                                             <input type="hidden" name="author_id"   value="{{ auth()->user()->id }}">
                                             <input type="hidden" name="question_id" value="{{ $question->id }}">
