@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Categories;
+use App\Comments;
+use App\Http\Requests\QuestionCommentValidator;
 use App\Http\Requests\QuestionValidator;
 use App\Questions;
 use App\ReportReasons;
@@ -144,6 +146,27 @@ class QuestionsController extends Controller
         if ($this->questions->create($input->except(['_token']))) { // CREATE = OK
             session()->flash('class', 'alert alert-success');
             session()->flash('message', 'Your question has been stored.');
+        }
+
+        return back(302);
+    }
+
+    /**
+     * Store a new comment to the question.
+     *
+     * @param  QuestionCommentValidator $input
+     * @param  Comments                 $comment
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function comment(QuestionCommentValidator $input, Comments $comment)
+    {
+        $filter = ['_token', 'question_id'];
+
+        if ($reaction = $comment->create($input->except($filter)) && (int) $input->author_id === auth()->user()->id) {
+            $comment->find($reaction->id)->suppportQuestion()->attach($input->question_id);
+
+            session()->flash('class', 'alert alert-success');
+            session()->flash('message', 'Your comment has been stored.');
         }
 
         return back(302);

@@ -22,12 +22,12 @@
                                             Dec 18, 2014 <a href="#">JohnDoe</a> says:
                                             <span class="pull-right">
                                                 <a class="btn btn-xs btn-default">
-                                                    <span class="fa fa-heart" aria-hidden="true"></span>
+                                                    <span style="color: red;" class="fa fa-heart" aria-hidden="true"></span>
                                                     <small>10</small>
                                                 </a>
                                                 <a class="btn btn-xs btn-danger" href="#" onclick="getDataById('{{ route('questions.json', $question) }}', 'report')">
                                                     <small>
-                                                        <span class="fa  fa-exclamation-triangle" aria-hidden="true"></span> Report
+                                                        <span class="fa fa-exclamation-triangle" aria-hidden="true"></span> Report
                                                     </small>
                                                 </a>
                                             </span>
@@ -44,8 +44,10 @@
                                     <div class="post-comments">
                                         <p class="meta">{{ auth()->user()->name }}:</p>
 
-                                        <form class="form-horizontal" method="POST" action=""> {{-- TODO: Implement store method for the comment. --}}
+                                        <form class="form-horizontal" method="POST" action="">
                                             {{ csrf_field() }} {{-- CSRF form protection --}}
+                                            <input type="hidden" name="author_id"   value="{{ auth()->user()->id }}">
+                                            <input type="hidden" name="question_id" value="{{ $question->id }}">
 
                                             <div class="form-group">
                                                 <div class="col-sm-12">

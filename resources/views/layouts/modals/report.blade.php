@@ -31,7 +31,7 @@
                         <legend>Extra information:</legend>
 
                         <div class="form-group">
-                            <textarea style="resize: none;" class="form-control" rows="6" class="description" placeholder="Please document why u reporting this."></textarea>
+                            <textarea style="resize: none;" class="form-control" rows="6" name="description" placeholder="Please document why u reporting this."></textarea>
                         </div>
                     </fieldset>
 
