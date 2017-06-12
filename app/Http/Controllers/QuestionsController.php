@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Categories;
 use App\Http\Requests\QuestionValidator;
 use App\Questions;
+use App\ReportReasons;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -24,23 +25,34 @@ class QuestionsController extends Controller
      * @var Categories
      */
     private $categories;
+
     /**
+     * The questions database model.
+     *
      * @var Questions
      */
     private $questions;
 
     /**
+     * The reaport reasons database model.
+     * @var ReportReasons
+     */
+    private $reasons;
+
+    /**
      * QuestionsController constructor.
      *
-     * @param Categories $categories
-     * @param Questions  $questions
+     * @param Categories    $categories
+     * @param Questions     $questions
+     * @param ReportReasons $reasons
      */
-    public function __construct(Categories $categories, Questions $questions)
+    public function __construct(Categories $categories, Questions $questions, ReportReasons $reasons)
     {
         $this->middleware('auth');
 
         $this->categories = $categories;
         $this->questions  = $questions;
+        $this->reasons = $reasons;
     }
 
     /**
@@ -95,12 +107,29 @@ class QuestionsController extends Controller
     public function show($questionId)
     {
         try {
-            $data['question'] = $this->questions->findOrFail($questionId);
-            $data['title']    = $data['question']->title;
+            $data['question']      = $this->questions->findOrFail($questionId);
+            $data['reportReasons'] = $this->reasons->all();
+            $data['title']         = $data['question']->title;
 
             return view('questions.show', $data);
         } catch (ModelNotFoundException $exception) {
             return app()->abort(404); // HTTP 404 => NOT FOUND.
+        }
+    }
+
+    /**
+     * Return the id of a question with json - AJAX
+     *
+     * @param  int $questionId The question id in the database.
+     * @return string
+     */
+    public function getById($questionId)
+    {
+        try {
+            $question = $this->questions->select(['id'])->findOrFail($questionId);
+            return json_encode($question);
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return json_encode(['404 - Resource not found.']);
         }
     }
 

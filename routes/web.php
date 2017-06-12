@@ -48,3 +48,4 @@ Route::get('/questions/create', 'QuestionsController@create')->name('questions.c
 Route::post('/questions.store', 'QuestionsController@store')->name('questions.store');
 Route::get('/question/show/{id}', 'QuestionsController@show')->name('questions.show');
 Route::get('/questions/user', 'QuestionsController@user')->name('questions.user');
+Route::get('/questions/json/{id}', 'QuestionsController@getById')->name('questions.json');

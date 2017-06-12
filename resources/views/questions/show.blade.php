@@ -25,7 +25,7 @@
                                                     <span class="fa fa-heart" aria-hidden="true"></span>
                                                     <small>10</small>
                                                 </a>
-                                                <a class="btn btn-xs btn-danger" href="#">
+                                                <a class="btn btn-xs btn-danger" href="#" onclick="getDataById('{{ route('questions.json', $question) }}', 'report')">
                                                     <small>
                                                         <span class="fa  fa-exclamation-triangle" aria-hidden="true"></span> Report
                                                     </small>
@@ -89,4 +89,10 @@
             </div> {{-- Question information sidebar --}}
         </div>
     </div>
+
+    @include('layouts.modals.report') {{-- Report Modal (comment) --}}
+@endsection
+
+@section('extra-js')
+    <script src="{{ asset('js/ajax-modal.js') }}"></script>
 @endsection

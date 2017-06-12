@@ -15,7 +15,7 @@ class ReportReasonSeed extends Seeder
         $data = [
             // ['lang_key' => '', 'name' => '', 'description' => ''],
             ['lang_key' => 'nl', 'name' => "I don't like this comment"],
-            ['lang_key' => 'nl', 'name' => 'Infinges on my rights'],
+            ['lang_key' => 'nl', 'name' => 'Infringes on my rights'],
             ['lang_key' => 'nl', 'name' => 'Abusive of hateful'],
             ['lang_key' => 'nl', 'name' => 'Inappropriate multimedia'],
             ['lang_key' => 'nl', 'name' => 'Misleading to spam'],
