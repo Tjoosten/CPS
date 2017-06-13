@@ -17,6 +17,7 @@ Route::get('auth/{provider}', 'Auth\SocialAuthencation@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthencation@handleProviderCallback');
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/disclaimer', 'DisclaimerController@index')->name('disclaimer');
 
 // Petition routes.
 Route::get('/petitions', 'PetitionController@index')->name('petitions.index');
