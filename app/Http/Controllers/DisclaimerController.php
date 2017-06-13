@@ -8,8 +8,6 @@ class DisclaimerController extends Controller
 {
     /**
      * Disclaimer constructor
-     *
-     * @return void.
      */
     public function __construct()
     {

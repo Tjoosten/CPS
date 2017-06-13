@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            @if (session()->get('class') && session()->get())
+            @if (session()->get('class') && session()->get('message'))
                 <div class="col-md-offset-2 col-md-8">
                     <div class="{{ session()->get('class') }}" role="alert">
                         {{ session()->get('message') }}

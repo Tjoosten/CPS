@@ -70,6 +70,10 @@
                                                 </div>
                                             @endforeach
                                         @else
+                                            <div style="margin-top: 10px;" class="alert alert-success" role="alert">
+                                                <strong><span class="fa fa-info-circle" aria-hidden="true"></span> Info:</strong>
+                                                Er zijn geen petities recent gestart.
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -86,7 +90,7 @@
                             <div class="input-group">
                                 <input type="text" name="term" class="form-control" placeholder="Zoek bericht">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
+                                    <button class="btn btn-default" type="submit">
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                     </button>
                                 </span>
@@ -96,8 +100,19 @@
 
                     <div class="panel panel-default"> {{-- Categories --}}
                         <div class="panel-heading"><span class="fa fa-tags" aria-hidden="true"></span> Categories:</div>
-                        <div class="panel-body">
-                        </div>
+                        <div class="panel-body"> {{-- Categories panel body--}}
+                            @if ((int) count($categories) > 0) {{-- There are categories found.  --}}
+
+                                @foreach ($categories as $category) {{-- Loop through categories --}}
+                                    <a href="" class="label label-success">{{ $category->name}}</a>
+                                @endforeach {{-- /End loop --}}
+                            
+                            @else {{-- No categories found. --}}
+                                <small>
+                                    <i>(There are no categories found.)</i>
+                                </small>
+                            @endif 
+                        </div {{-- Categories panel body --}}
                     </div> {{-- /Categories --}}
                 @else
                     <a href="{{ route('petitions.create') }}" class="btn btn-success btn-lg btn-block">

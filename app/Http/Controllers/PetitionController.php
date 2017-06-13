@@ -33,7 +33,10 @@ class PetitionController extends Controller
      * @var Categories
      */
     private $categories;
+
     /**
+     * The country model for the database.
+     *
      * @var Country
      */
     private $country;
@@ -64,11 +67,13 @@ class PetitionController extends Controller
     {
         $modelBase = $this->petition->with(['author', 'categories']);
 
-        $data['title']     = 'Petitions';
-        $data['petitions'] = $modelBase->paginate(15);
-        $data['recent']    = $modelBase->orderBy('created_at', 'DESC')->paginate(15);
-        $data['featured']  = []; // TODO: Build query
-        $data['popular']   = []; // TODO: Build query
+        $data['title']      = 'Petitions';
+        $data['petitions']  = $modelBase->paginate(15);
+        $data['categories'] = $this->categories->where('module', 'petition')->inRandomOrder()->limit(15)->get();
+        ;
+        $data['recent']     = $modelBase->orderBy('created_at', 'DESC')->paginate(15);
+        $data['featured']   = []; // TODO: Build query
+        $data['popular']    = []; // TODO: Build query
 
         return view('petitions.index', $data);
     }
