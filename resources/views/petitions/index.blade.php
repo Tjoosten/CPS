@@ -3,6 +3,12 @@
 @section('content')
     <div class="container">
         <div class="row">
+            @if (session()->get('class') && session()->get('message')) {{-- There are flash messages found. --}}
+                <div class="col-md-12">
+                
+                </div>
+            @endif 
+
             <div class="col-md-9"> {{-- Main content --}}
                 <div class="panel panel-default">
                     <div class="panel-body"> {{-- Tab navigation --}}
@@ -55,12 +61,11 @@
                                                                 | <i class="fa fa-calendar" aria-hidden="true"></i> {{ $item3->created_at->format('d-m-Y') }}
                                                                 | <i class="fa fa-tags" aria-hidden="true"></i> Tags:
 
-                                                                @if ((int) count($item3->categories()) > 0)
+                                                                @if ($item3->categories->count() > 0)
                                                                     @foreach($item3->categories as $category3)
                                                                         <a href="#" class="label label-danger">{{ $category3->name }}</a>
                                                                     @endforeach
                                                                 @else
-                                                                    {{-- TODO: Bug in the categories count. --}}
                                                                     <span class="label label-primary">Geen</span>
                                                                 @endif
 
@@ -88,7 +93,7 @@
                     <div class="well well-sm"> {{-- Search-box --}}
                         <form method="POST" action="">
                             <div class="input-group">
-                                <input type="text" name="term" class="form-control" placeholder="Zoek bericht">
+                                <input type="text" name="term" class="form-control" placeholder="Search petition">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="submit">
                                         <i class="fa fa-search" aria-hidden="true"></i>

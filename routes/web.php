@@ -31,6 +31,9 @@ Route::get('/settings', 'ProfileController@userSettings')->name('profile.setting
 Route::get('/profile/member/{id}', 'ProfileController@members')->name('profile.member');
 Route::get('/profile/organization/{id}', 'ProfileController@organization')->name('profile.organization');
 
+// Sgnature routes 
+Route::get('/signatures/show/{id}', 'SignatureController@show')->name('signatures.show');
+
 // User management
 Route::get('/users', 'UsersController@index')->name('users.index');
 
