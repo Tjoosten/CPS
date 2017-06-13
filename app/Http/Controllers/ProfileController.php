@@ -100,7 +100,7 @@ class ProfileController extends Controller
             $data['title']          = $data['user']->name;
 
             return view('account.profile-members', $data);
-        } catch(ModelNotFoundException $modelNotFoundException) {
+        } catch (ModelNotFoundException $modelNotFoundException) {
             return app()->abort(404);
         }
     }

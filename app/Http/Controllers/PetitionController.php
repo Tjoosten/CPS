@@ -128,27 +128,32 @@ class PetitionController extends Controller
         return back(302);
     }
 
-    public function search()
+    /**
+     * Search for a specific petition.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
     {
-
     }
 
     /**
-     * Edit a specific petition. 
-     * 
-     * @param  integer $petitionId The petition id in the database. 
-     * @return mixed 
+     * Edit a specific petition.
+     *
+     * @param  integer $petitionId The petition id in the database.
+     * @return mixed
      */
     public function edit($petitionId)
     {
         try {
             $data['petition'] = $this->petition->findOrFail($petitionId);
 
-           if ($data['petition']->author_id === auth()->user()->id) { // User authorization check.
+            if ($data['petition']->author_id === auth()->user()->id) { // User authorization check.
                $data['title']    = "Edit {$data['petition']->title}";
 
-               return view('petitions.edit', $data); 
-           }
+                return view('petitions.edit', $data);
+            }
         } catch (ModelNotFoundException $modelNotFoundException) {
             return app()->abort(404);
         }
@@ -197,7 +202,7 @@ class PetitionController extends Controller
             }
 
             return redirect()->route('petitions.index');
-        } catch(ModelNotFoundException $modelNotFoundException) {
+        } catch (ModelNotFoundException $modelNotFoundException) {
             return app()->abort(404);
         }
     }

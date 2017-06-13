@@ -67,5 +67,4 @@ class SocialAuthencation extends Controller
             'avatar'            => $user->avatar
         ]);
     }
-
 }
