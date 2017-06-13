@@ -128,14 +128,53 @@ class PetitionController extends Controller
         return back(302);
     }
 
-    public function edit($petitionId)
+    public function search()
     {
 
     }
 
+    /**
+     * Edit a specific petition. 
+     * 
+     * @param  integer $petitionId The petition id in the database. 
+     * @return mixed 
+     */
+    public function edit($petitionId)
+    {
+        try {
+            $data['petition'] = $this->petition->findOrFail($petitionId);
+
+           if ($data['petition']->author_id === auth()->user()->id) { // User authorization check.
+               $data['title']    = "Edit {$data['petition']->title}";
+
+               return view('petitions.edit', $data); 
+           }
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return app()->abort(404);
+        }
+    }
+
+    /**
+     * Update an petition in the system.
+     *
+     * @param  PetitionValidator $input
+     * @param  string            $petitionId
+     * @return mixed
+     */
     public function update(PetitionValidator $input, $petitionId)
     {
+        try {
+            $petition = $this->petition->findOrfail($petitionId);
 
+            if ($petition->update($input->except(['_token']))) { // Update petition = OK
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', 'Your petition has been updated.');
+            }
+
+            return back(302);
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return app()->abort(404);
+        }
     }
 
     /**

@@ -28,6 +28,7 @@ Route::get('/petitions/delete/{id}', 'PetitionController@destroy')->name('petiti
 // Profile routes.
 Route::get('/settings', 'ProfileController@userSettings')->name('profile.settings');
 Route::get('/profile/member/{id}', 'ProfileController@members')->name('profile.member');
+Route::get('/profile/organization/{id}', 'ProfileController@organization')->name('profile.organization');
 
 // User management
 Route::get('/users', 'UsersController@index')->name('users.index');

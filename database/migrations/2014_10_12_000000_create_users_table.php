@@ -17,6 +17,8 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->bigInteger('twitter_id')->nullable()->default(0);
             $table->bigInteger('facebook_id')->nullable()->default(0);
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password')->nullable();
