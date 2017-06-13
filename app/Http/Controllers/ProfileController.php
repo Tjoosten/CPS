@@ -49,6 +49,8 @@ class ProfileController extends Controller
         $this->user         = $user;
         $this->countries    = $countries;
         $this->organization = $organization;
+
+        $this->middleware('lang');
     }
 
     /**

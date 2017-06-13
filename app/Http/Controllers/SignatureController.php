@@ -41,6 +41,7 @@ class SignatureController extends Controller
     {
         // $this->middelware('lang'); 
         $this->middleware('auth')->only(['index']);
+        $this->middleware('lang');
 
         $this->petition = $petition;
         $this->users    = $users;

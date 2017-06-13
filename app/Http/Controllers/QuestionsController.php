@@ -51,10 +51,11 @@ class QuestionsController extends Controller
     public function __construct(Categories $categories, Questions $questions, ReportReasons $reasons)
     {
         $this->middleware('auth');
+        $this->middleware('lang');
 
         $this->categories = $categories;
         $this->questions  = $questions;
-        $this->reasons = $reasons;
+        $this->reasons    = $reasons;
     }
 
     /**

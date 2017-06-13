@@ -50,8 +50,8 @@ class PetitionController extends Controller
      */
     public function __construct(Petitions $petition, Categories $categories, Country $country)
     {
-        $authRoutes = ['create', 'store'];
-        $this->middleware('auth')->only($authRoutes);
+        $this->middleware('auth')->only(['create', 'store']);
+        $this->middleware('lang');
 
         $this->petition   = $petition;
         $this->categories = $categories;

@@ -29,6 +29,8 @@ class OrganizationController extends Controller
      */
     public function __construct(Organization $organzation)
     {
+        $this->middleware('lang');
+
         $this->organzation = $organzation;
     }
 
