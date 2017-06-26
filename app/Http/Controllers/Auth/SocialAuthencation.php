@@ -56,9 +56,7 @@ class SocialAuthencation extends Controller
      */
     private function findOrCreateUser($user, $provider)
     {
-        // TODO: BUG error report when user try to register but already has an social authencation.
-
-        if ($authUser = User::where("{$provider}_id", $user->id)->first()) {
+        if ($authUser = User::where("{$provider}_id", $user->id)->orWhere('email', $user->email)->first()) {
             return $authUser;
         }
 
@@ -69,5 +67,4 @@ class SocialAuthencation extends Controller
             'avatar'            => $user->avatar
         ]);
     }
-
 }

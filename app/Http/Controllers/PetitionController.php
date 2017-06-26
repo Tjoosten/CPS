@@ -33,7 +33,10 @@ class PetitionController extends Controller
      * @var Categories
      */
     private $categories;
+
     /**
+     * The country model for the database.
+     *
      * @var Country
      */
     private $country;
@@ -47,8 +50,8 @@ class PetitionController extends Controller
      */
     public function __construct(Petitions $petition, Categories $categories, Country $country)
     {
-        $authRoutes = ['create', 'store'];
-        $this->middleware('auth')->only($authRoutes);
+        $this->middleware('auth')->only(['create', 'store']);
+        $this->middleware('lang');
 
         $this->petition   = $petition;
         $this->categories = $categories;
@@ -64,11 +67,13 @@ class PetitionController extends Controller
     {
         $modelBase = $this->petition->with(['author', 'categories']);
 
-        $data['title']     = 'Petitions';
-        $data['petitions'] = $modelBase->paginate(15);
-        $data['recent']    = $modelBase->orderBy('created_at', 'DESC')->paginate(15);
-        $data['featured']  = []; // TODO: Build query
-        $data['popular']   = []; // TODO: Build query
+        $data['title']      = 'Petitions';
+        $data['petitions']  = $modelBase->paginate(15);
+        $data['categories'] = $this->categories->where('module', 'petition')->inRandomOrder()->limit(15)->get();
+        ;
+        $data['recent']     = $modelBase->orderBy('created_at', 'DESC')->paginate(15);
+        $data['featured']   = []; // TODO: Build query
+        $data['popular']    = []; // TODO: Build query
 
         return view('petitions.index', $data);
     }
@@ -128,14 +133,58 @@ class PetitionController extends Controller
         return back(302);
     }
 
-    public function edit($petitionId)
+    /**
+     * Search for a specific petition.
+     *
+     * @param  Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
     {
-
     }
 
+    /**
+     * Edit a specific petition.
+     *
+     * @param  integer $petitionId The petition id in the database.
+     * @return mixed
+     */
+    public function edit($petitionId)
+    {
+        try {
+            $data['petition'] = $this->petition->findOrFail($petitionId);
+
+            if ($data['petition']->author_id === auth()->user()->id) { // User authorization check.
+               $data['title']    = "Edit {$data['petition']->title}";
+
+                return view('petitions.edit', $data);
+            }
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return app()->abort(404);
+        }
+    }
+
+    /**
+     * Update an petition in the system.
+     *
+     * @param  PetitionValidator $input
+     * @param  string            $petitionId
+     * @return mixed
+     */
     public function update(PetitionValidator $input, $petitionId)
     {
+        try {
+            $petition = $this->petition->findOrfail($petitionId);
 
+            if ($petition->update($input->except(['_token']))) { // Update petition = OK
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', 'Your petition has been updated.');
+            }
+
+            return back(302);
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return app()->abort(404);
+        }
     }
 
     /**
@@ -158,7 +207,7 @@ class PetitionController extends Controller
             }
 
             return redirect()->route('petitions.index');
-        } catch(ModelNotFoundException $modelNotFoundException) {
+        } catch (ModelNotFoundException $modelNotFoundException) {
             return app()->abort(404);
         }
     }

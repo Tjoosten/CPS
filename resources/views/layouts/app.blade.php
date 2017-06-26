@@ -46,8 +46,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li><a href="{{ route('petitions.index') }}">Petities</a></li>
-                        <li><a href="{{ route('helpdesk.index') }}">Helpdesk</a></li>
-                        <li><a href="">Disclaimer</a></li>
+                        
+                        @if (auth()->check())
+                            <li><a href="{{ route('helpdesk.index') }}">Helpdesk</a></li>
+                        @endif
+
+                        <li><a href="{{ route('disclaimer') }}">Disclaimer</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

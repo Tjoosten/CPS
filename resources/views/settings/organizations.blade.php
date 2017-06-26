@@ -17,9 +17,15 @@
                                         <a href="">{{ $organization->organisation_name }}</a>
                                     </strong>
 
-                                    <a href="" class="pull-right btn btn-xs btn-danger">
-                                        <span class="fa fa-close" aria-hidden="true"></span> Leave
-                                    </a>
+                                    <div class="pull-right">
+                                        <a href="" class="btn btn-xs btn-info">
+                                            <span class="fa fa-asterisk" aria-hidden="true"></span> Info
+                                        </a>
+
+                                        <a href="" class="btn btn-xs btn-danger">
+                                            <span class="fa fa-close" aria-hidden="true"></span> Leave
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach

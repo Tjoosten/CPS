@@ -17,6 +17,7 @@ Route::get('auth/{provider}', 'Auth\SocialAuthencation@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthencation@handleProviderCallback');
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/disclaimer', 'DisclaimerController@index')->name('disclaimer');
 
 // Petition routes.
 Route::get('/petitions', 'PetitionController@index')->name('petitions.index');
@@ -28,12 +29,19 @@ Route::get('/petitions/delete/{id}', 'PetitionController@destroy')->name('petiti
 // Profile routes.
 Route::get('/settings', 'ProfileController@userSettings')->name('profile.settings');
 Route::get('/profile/member/{id}', 'ProfileController@members')->name('profile.member');
+Route::get('/profile/organization/{id}', 'ProfileController@organization')->name('profile.organization');
+
+// Sgnature routes 
+Route::get('/signatures/show/{id}', 'SignatureController@show')->name('signatures.show');
 
 // User management
 Route::get('/users', 'UsersController@index')->name('users.index');
 
 // Settings routes
 Route::post('/settings/security', 'AccountController@updatePassword')->name('settings.security');
+
+// Comment routes
+Route::post('comment/question', 'QuestionsController@comment')->name('comments.question');
 
 // Organization routes
 Route::get('/organizations/create', 'OrganizationController@create')->name('organization.create');
@@ -48,3 +56,4 @@ Route::get('/questions/create', 'QuestionsController@create')->name('questions.c
 Route::post('/questions.store', 'QuestionsController@store')->name('questions.store');
 Route::get('/question/show/{id}', 'QuestionsController@show')->name('questions.show');
 Route::get('/questions/user', 'QuestionsController@user')->name('questions.user');
+Route::get('/questions/json/{id}', 'QuestionsController@getById')->name('questions.json');

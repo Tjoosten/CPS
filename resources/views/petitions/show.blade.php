@@ -23,8 +23,8 @@
 
                             <div class="pull-right">
                                 <a href="" class="btn btn-xs btn-default"><span class="fa fa-pencil" aria-hidden="true"></span> Edit</a>
-                                <a href="" class="btn btn-xs btn-default"><span class="fa fa-bars" aria-hidden="true"></span> Signatures</a>
-                                <a href={{ route('petitions.delete', $petition) }}"" class="btn btn-xs btn-default">
+                                <a href="{{ route('signatures.show', $petition) }}" class="btn btn-xs btn-default"><span class="fa fa-bars" aria-hidden="true"></span> Signatures</a>
+                                <a href="{{ route('petitions.delete', $petition) }}" class="btn btn-xs btn-default">
                                     <span class="fa fa-trash" aria-hidden="true"></span> Delete
                                 </a>
                             </div>

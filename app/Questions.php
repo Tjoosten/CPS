@@ -37,4 +37,14 @@ class Questions extends Model
     {
         return $this->belongsTo(Categories::class, 'category_id');
     }
+
+    /**
+     * Get the comments for a question.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function comments()
+    {
+        return $this->belongsToMany(Comments::class)->withTimestamps();
+    }
 }

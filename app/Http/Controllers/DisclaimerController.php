@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DisclaimerController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Disclaimer constructor
      */
     public function __construct()
     {
@@ -17,12 +15,13 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the disclaimer page.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
-        return view('home');
+        $data['title'] = 'Disclaimer';
+        return view('disclaimer', $data);
     }
 }

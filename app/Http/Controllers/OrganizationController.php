@@ -29,6 +29,8 @@ class OrganizationController extends Controller
      */
     public function __construct(Organization $organzation)
     {
+        $this->middleware('lang');
+
         $this->organzation = $organzation;
     }
 
@@ -56,7 +58,7 @@ class OrganizationController extends Controller
             $data['title']        = $data['organization']->name;
 
             return view('organizations.show', $data);
-        } catch(ModelNotFoundException $modelNotFoundException) {
+        } catch (ModelNotFoundException $modelNotFoundException) {
             return app()->abort(404);
         }
     }

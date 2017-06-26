@@ -28,6 +28,7 @@ class AccountController extends Controller
     public function __construct(User $user)
     {
         $this->middleware('auth');
+        $this->middleware('lang');
 
         $this->user = $user;
     }

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Categories;
+use App\Comments;
+use App\Http\Requests\QuestionCommentValidator;
 use App\Http\Requests\QuestionValidator;
 use App\Questions;
+use App\ReportReasons;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -24,23 +27,35 @@ class QuestionsController extends Controller
      * @var Categories
      */
     private $categories;
+
     /**
+     * The questions database model.
+     *
      * @var Questions
      */
     private $questions;
 
     /**
+     * The reaport reasons database model.
+     * @var ReportReasons
+     */
+    private $reasons;
+
+    /**
      * QuestionsController constructor.
      *
-     * @param Categories $categories
-     * @param Questions  $questions
+     * @param Categories    $categories
+     * @param Questions     $questions
+     * @param ReportReasons $reasons
      */
-    public function __construct(Categories $categories, Questions $questions)
+    public function __construct(Categories $categories, Questions $questions, ReportReasons $reasons)
     {
         $this->middleware('auth');
+        $this->middleware('lang');
 
         $this->categories = $categories;
         $this->questions  = $questions;
+        $this->reasons    = $reasons;
     }
 
     /**
@@ -95,12 +110,29 @@ class QuestionsController extends Controller
     public function show($questionId)
     {
         try {
-            $data['question'] = $this->questions->findOrFail($questionId);
-            $data['title']    = $data['question']->title;
+            $data['question']      = $this->questions->with(['comments.author'])->findOrFail($questionId);
+            $data['reportReasons'] = $this->reasons->all();
+            $data['title']         = $data['question']->title;
 
             return view('questions.show', $data);
         } catch (ModelNotFoundException $exception) {
             return app()->abort(404); // HTTP 404 => NOT FOUND.
+        }
+    }
+
+    /**
+     * Return the id of a question with json - AJAX
+     *
+     * @param  int $questionId The question id in the database.
+     * @return string
+     */
+    public function getById($questionId)
+    {
+        try {
+            $question = $this->questions->select(['id'])->findOrFail($questionId);
+            return json_encode($question);
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return json_encode(['404 - Resource not found.']);
         }
     }
 
@@ -115,6 +147,29 @@ class QuestionsController extends Controller
         if ($this->questions->create($input->except(['_token']))) { // CREATE = OK
             session()->flash('class', 'alert alert-success');
             session()->flash('message', 'Your question has been stored.');
+        }
+
+        return back(302);
+    }
+
+    /**
+     * Store a new comment to the question.
+     *
+     * @param  QuestionCommentValidator $input
+     * @param  Comments                 $comment
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function comment(QuestionCommentValidator $input, Comments $comment)
+    {
+        $filter = ['_token', 'question_id'];
+
+        if ((int) $input->author_id === auth()->user()->id) { // The authencated user is the same as the user in the form.
+            if ($reaction = $comment->create($input->except($filter))) { // Try to insert the comment in the database.
+                $comment->find($reaction->id)->suppportQuestion()->attach($input->question_id);
+
+                session()->flash('class', 'alert alert-success');
+                session()->flash('message', 'Your comment has been stored.');
+            }
         }
 
         return back(302);
